@@ -34,7 +34,8 @@ namespace AdobeCrapKiller
         private void getProcessStatusTimer_Tick(object sender, EventArgs e)
         {
             // HACK: This is simple brute force for now, as a concept test
-
+            lblProcess01.FontWeight = ProcessExtensions.IsRunning(lblProcess01.Content.ToString()) ? FontWeights.Bold : FontWeights.Regular;
+            lblProcess02.FontWeight = ProcessExtensions.IsRunning(lblProcess02.Content.ToString()) ? FontWeights.Bold : FontWeights.Regular;
         }
     }
 }
