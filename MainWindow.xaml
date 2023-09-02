@@ -45,6 +45,6 @@
             <Label x:Name="lblProcess12" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Content="AdobeNotificationClient" Grid.Row="11"/>
             <Label x:Name="lblProcess13" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Content="AdobeUpdateService" Grid.Row="12"/>
         </Grid>
-        <Button x:Name="button" Content="Button" FontSize="16"/>
+        <Button x:Name="btnKill" Content="Kill That Crap !" FontSize="16" Click="btnKill_Click"/>
     </StackPanel>
 </Window>
