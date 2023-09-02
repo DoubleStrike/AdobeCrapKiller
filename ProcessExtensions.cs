@@ -14,17 +14,23 @@ namespace AdobeCrapKiller
 
         public static bool KillByName(string name)
         {
-            Process[] ProcessList = GetByName(name);
-
-            // Early return if empty
-            if (ProcessList.Length == 0) return false;
-
-            foreach (Process ProcessToKill in ProcessList)
+            try
             {
-                ProcessToKill.Kill();
-            }
+                Process[] ProcessList = GetByName(name);
 
-            return true;
+                // Early return if empty
+                if (ProcessList.Length == 0) return false;
+
+                foreach (Process ProcessToKill in ProcessList)
+                {
+                    ProcessToKill.Kill();
+                }
+
+                return true;
+            } catch
+            {
+                return false;
+            }
         }
     }
 }

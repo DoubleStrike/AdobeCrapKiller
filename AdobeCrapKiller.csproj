@@ -9,13 +9,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="app.manifest" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="app.manifest">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <None Update="app.manifest">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
