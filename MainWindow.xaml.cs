@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Media;
 using System.Security.Principal;
@@ -13,6 +14,8 @@ namespace AdobeCrapKiller
     /// </summary>
     public partial class MainWindow : Window
     {
+        List<AdobeProcess> processesToWatch = new List<AdobeProcess>();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -38,6 +41,21 @@ namespace AdobeCrapKiller
             getProcessStatusTimer.Interval = new TimeSpan(0, 0, 0, 1);
             getProcessStatusTimer.Start();
 
+            // Build process array and feed it to the datagrid
+            processesToWatch.Add(new AdobeProcess() { ProcessName = "notepad2" });
+            processesToWatch.Add(new AdobeProcess() { ProcessName = "node" });
+            processesToWatch.Add(new AdobeProcess() { ProcessName = "coresync" });
+            processesToWatch.Add(new AdobeProcess() { ProcessName = "acrotray" });
+            processesToWatch.Add(new AdobeProcess() { ProcessName = "armsvc" });
+            processesToWatch.Add(new AdobeProcess() { ProcessName = "Adobe Desktop Service" });
+            processesToWatch.Add(new AdobeProcess() { ProcessName = "AdobeCollabSync" });
+            processesToWatch.Add(new AdobeProcess() { ProcessName = "AdobeIPCBroker" });
+            processesToWatch.Add(new AdobeProcess() { ProcessName = "Creative Cloud" });
+            processesToWatch.Add(new AdobeProcess() { ProcessName = "CCLibrary" });
+            processesToWatch.Add(new AdobeProcess() { ProcessName = "CCXProcess" });
+            processesToWatch.Add(new AdobeProcess() { ProcessName = "AcrobatNotificationClient" });
+            processesToWatch.Add(new AdobeProcess() { ProcessName = "AdobeNotificationClient" });
+            processesToWatch.Add(new AdobeProcess() { ProcessName = "AdobeUpdateService" });
         }
 
         private void btnKill_Click(object sender, RoutedEventArgs e)
@@ -113,5 +131,7 @@ namespace AdobeCrapKiller
 
             set { s_processName = string.IsNullOrEmpty(value) ? "" : value; }
         }
+
+        public bool Active { get; set; }
     }
 }
