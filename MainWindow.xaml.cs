@@ -21,7 +21,7 @@ namespace AdobeCrapKiller
             InitializeComponent();
 
             // Restart program and run as admin
-            if (!IsAdministrator())
+            if (false && !IsAdministrator())
             {
                 if (System.Diagnostics.Process.GetCurrentProcess().MainModule is ProcessModule exeModule)
                 {
