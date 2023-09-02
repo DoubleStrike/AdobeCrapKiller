@@ -20,12 +20,15 @@ namespace AdobeCrapKiller
             // Restart program and run as admin
             if (!IsAdministrator())
             {
-                string exeName = SafeString(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
-                ProcessStartInfo startInfo = new ProcessStartInfo(exeName);
-                startInfo.Verb = "runas";
-                System.Diagnostics.Process.Start(startInfo);
-                Application.Current.Shutdown();
-                return;
+                if (System.Diagnostics.Process.GetCurrentProcess().MainModule is ProcessModule exeModule)
+                {
+                    string exeName = SafeString(exeModule.FileName);
+                    ProcessStartInfo startInfo = new ProcessStartInfo(exeName);
+                    startInfo.Verb = "runas";
+                    System.Diagnostics.Process.Start(startInfo);
+                    Application.Current.Shutdown();
+                    return;
+                }
             }
 
 
@@ -57,7 +60,7 @@ namespace AdobeCrapKiller
             if (lblProcess14.FontWeight == FontWeights.Bold) ProcessExtensions.KillByName(SafeString(lblProcess14.Content.ToString()));
         }
 
-        private void getProcessStatusTimer_Tick(object sender, EventArgs e)
+        private void getProcessStatusTimer_Tick(object? sender, EventArgs e)
         {
             // HACK: This is simple brute force for now, as a concept test
             lblProcess01.FontWeight = ProcessExtensions.IsRunning(SafeString(lblProcess01.Content.ToString())) ? FontWeights.Bold : FontWeights.Regular;
@@ -97,6 +100,18 @@ namespace AdobeCrapKiller
             if (!string.IsNullOrWhiteSpace(input)) return input;
 
             return "";
+        }
+    }
+
+    public class AdobeProcess
+    {
+        private string s_processName = "";
+
+        public string? ProcessName
+        {
+            get { return this.s_processName; }
+
+            set { s_processName = string.IsNullOrEmpty(value) ? "" : value; }
         }
     }
 }
