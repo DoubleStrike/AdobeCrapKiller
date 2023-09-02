@@ -99,21 +99,21 @@ namespace AdobeCrapKiller
         /// </summary>
         private void PopulateProcessList()
         {
-            processesToWatch.Add(new AdobeProcess() { ProcessName = "notepad2" });
-            processesToWatch.Add(new AdobeProcess() { ProcessName = "node" });
-            processesToWatch.Add(new AdobeProcess() { ProcessName = "coresync" });
-            processesToWatch.Add(new AdobeProcess() { ProcessName = "acrotray" });
-            processesToWatch.Add(new AdobeProcess() { ProcessName = "armsvc" });
-            processesToWatch.Add(new AdobeProcess() { ProcessName = "Adobe Desktop Service" });
-            processesToWatch.Add(new AdobeProcess() { ProcessName = "AdobeCollabSync" });
-            processesToWatch.Add(new AdobeProcess() { ProcessName = "AdobeIPCBroker" });
-            processesToWatch.Add(new AdobeProcess() { ProcessName = "Creative Cloud" });
-            processesToWatch.Add(new AdobeProcess() { ProcessName = "Creative Cloud Helper" });
-            processesToWatch.Add(new AdobeProcess() { ProcessName = "CCLibrary" });
-            processesToWatch.Add(new AdobeProcess() { ProcessName = "CCXProcess" });
-            processesToWatch.Add(new AdobeProcess() { ProcessName = "AcrobatNotificationClient" });
-            processesToWatch.Add(new AdobeProcess() { ProcessName = "AdobeNotificationClient" });
-            processesToWatch.Add(new AdobeProcess() { ProcessName = "AdobeUpdateService" });
+            processesToWatch.Add(new AdobeProcess("notepad2"));
+            processesToWatch.Add(new AdobeProcess("node"));
+            processesToWatch.Add(new AdobeProcess("coresync"));
+            processesToWatch.Add(new AdobeProcess("acrotray"));
+            processesToWatch.Add(new AdobeProcess("armsvc"));
+            processesToWatch.Add(new AdobeProcess("Adobe Desktop Service"));
+            processesToWatch.Add(new AdobeProcess("AdobeCollabSync"));
+            processesToWatch.Add(new AdobeProcess("AdobeIPCBroker"));
+            processesToWatch.Add(new AdobeProcess("Creative Cloud"));
+            processesToWatch.Add(new AdobeProcess("Creative Cloud Helper"));
+            processesToWatch.Add(new AdobeProcess("CCLibrary"));
+            processesToWatch.Add(new AdobeProcess("CCXProcess"));
+            processesToWatch.Add(new AdobeProcess("AcrobatNotificationClient"));
+            processesToWatch.Add(new AdobeProcess("AdobeNotificationClient"));
+            processesToWatch.Add(new AdobeProcess("AdobeUpdateService"));
         }
 
         /// <summary>
@@ -131,15 +131,18 @@ namespace AdobeCrapKiller
 
     public class AdobeProcess
     {
-        private string s_processName = "";
+        public string ProcessName { get; set; }
+        public bool Active { get; set; }
 
-        public string? ProcessName
+        public AdobeProcess(string processName)
         {
-            get { return this.s_processName; }
-
-            set { s_processName = string.IsNullOrEmpty(value) ? "" : value; }
+            ProcessName = processName;
+            Active = false;
         }
 
-        public bool Active { get; set; }
+        public AdobeProcess(string processName, bool active) : this(processName)
+        {
+            Active = active;
+        }
     }
 }
