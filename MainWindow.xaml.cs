@@ -1,17 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Diagnostics;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace AdobeCrapKiller
 {
@@ -24,6 +16,19 @@ namespace AdobeCrapKiller
         {
             InitializeComponent();
 
+            // Restart program and run as admin
+            if (!IsAdministrator())
+            {
+                string exeName = SafeString(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
+                ProcessStartInfo startInfo = new ProcessStartInfo(exeName);
+                startInfo.Verb = "runas";
+                System.Diagnostics.Process.Start(startInfo);
+                Application.Current.Shutdown();
+                return;
+            }
+
+
+            // Start 1 second refresh timer to show process state
             System.Windows.Threading.DispatcherTimer getProcessStatusTimer = new System.Windows.Threading.DispatcherTimer();
             getProcessStatusTimer.Tick += new EventHandler(getProcessStatusTimer_Tick);
             getProcessStatusTimer.Interval = new TimeSpan(0, 0, 0, 1);
@@ -68,6 +73,22 @@ namespace AdobeCrapKiller
             lblProcess14.FontWeight = ProcessExtensions.IsRunning(SafeString(lblProcess14.Content.ToString())) ? FontWeights.Bold : FontWeights.Regular;
         }
 
+        /// <summary>
+        /// Check if program is running as admin
+        /// </summary>
+        /// <returns>true, if running with elevated privileges</returns>
+        private static bool IsAdministrator()
+        {
+            WindowsIdentity identity = WindowsIdentity.GetCurrent();
+            WindowsPrincipal principal = new WindowsPrincipal(identity);
+            return principal.IsInRole(WindowsBuiltInRole.Administrator);
+        }
+
+        /// <summary>
+        /// Helper function to take a nullable string and return a fixed string
+        /// </summary>
+        /// <param name="input">input nullable string</param>
+        /// <returns>the input string if not empty, else an empty string</returns>
         private static string SafeString(string? input)
         {
             if (!string.IsNullOrWhiteSpace(input)) return input;
