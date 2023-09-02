@@ -34,28 +34,14 @@ namespace AdobeCrapKiller
                 }
             }
 
+            // Build process array for future use ?
+            PopulateProcessList();
 
             // Start 1 second refresh timer to show process state
             System.Windows.Threading.DispatcherTimer getProcessStatusTimer = new System.Windows.Threading.DispatcherTimer();
             getProcessStatusTimer.Tick += new EventHandler(getProcessStatusTimer_Tick);
             getProcessStatusTimer.Interval = new TimeSpan(0, 0, 0, 1);
             getProcessStatusTimer.Start();
-
-            // Build process array and feed it to the datagrid
-            processesToWatch.Add(new AdobeProcess() { ProcessName = "notepad2" });
-            processesToWatch.Add(new AdobeProcess() { ProcessName = "node" });
-            processesToWatch.Add(new AdobeProcess() { ProcessName = "coresync" });
-            processesToWatch.Add(new AdobeProcess() { ProcessName = "acrotray" });
-            processesToWatch.Add(new AdobeProcess() { ProcessName = "armsvc" });
-            processesToWatch.Add(new AdobeProcess() { ProcessName = "Adobe Desktop Service" });
-            processesToWatch.Add(new AdobeProcess() { ProcessName = "AdobeCollabSync" });
-            processesToWatch.Add(new AdobeProcess() { ProcessName = "AdobeIPCBroker" });
-            processesToWatch.Add(new AdobeProcess() { ProcessName = "Creative Cloud" });
-            processesToWatch.Add(new AdobeProcess() { ProcessName = "CCLibrary" });
-            processesToWatch.Add(new AdobeProcess() { ProcessName = "CCXProcess" });
-            processesToWatch.Add(new AdobeProcess() { ProcessName = "AcrobatNotificationClient" });
-            processesToWatch.Add(new AdobeProcess() { ProcessName = "AdobeNotificationClient" });
-            processesToWatch.Add(new AdobeProcess() { ProcessName = "AdobeUpdateService" });
         }
 
         private void btnKill_Click(object sender, RoutedEventArgs e)
@@ -106,6 +92,28 @@ namespace AdobeCrapKiller
             WindowsIdentity identity = WindowsIdentity.GetCurrent();
             WindowsPrincipal principal = new WindowsPrincipal(identity);
             return principal.IsInRole(WindowsBuiltInRole.Administrator);
+        }
+
+        /// <summary>
+        /// Populates the processesToWatch list for future use
+        /// </summary>
+        private void PopulateProcessList()
+        {
+            processesToWatch.Add(new AdobeProcess() { ProcessName = "notepad2" });
+            processesToWatch.Add(new AdobeProcess() { ProcessName = "node" });
+            processesToWatch.Add(new AdobeProcess() { ProcessName = "coresync" });
+            processesToWatch.Add(new AdobeProcess() { ProcessName = "acrotray" });
+            processesToWatch.Add(new AdobeProcess() { ProcessName = "armsvc" });
+            processesToWatch.Add(new AdobeProcess() { ProcessName = "Adobe Desktop Service" });
+            processesToWatch.Add(new AdobeProcess() { ProcessName = "AdobeCollabSync" });
+            processesToWatch.Add(new AdobeProcess() { ProcessName = "AdobeIPCBroker" });
+            processesToWatch.Add(new AdobeProcess() { ProcessName = "Creative Cloud" });
+            processesToWatch.Add(new AdobeProcess() { ProcessName = "Creative Cloud Helper" });
+            processesToWatch.Add(new AdobeProcess() { ProcessName = "CCLibrary" });
+            processesToWatch.Add(new AdobeProcess() { ProcessName = "CCXProcess" });
+            processesToWatch.Add(new AdobeProcess() { ProcessName = "AcrobatNotificationClient" });
+            processesToWatch.Add(new AdobeProcess() { ProcessName = "AdobeNotificationClient" });
+            processesToWatch.Add(new AdobeProcess() { ProcessName = "AdobeUpdateService" });
         }
 
         /// <summary>
