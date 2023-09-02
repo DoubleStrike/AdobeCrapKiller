@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Media;
 using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
@@ -38,6 +39,8 @@ namespace AdobeCrapKiller
 
         private void btnKill_Click(object sender, RoutedEventArgs e)
         {
+            SystemSounds.Beep.Play();
+
             if (lblProcess01.FontWeight == FontWeights.Bold) ProcessExtensions.KillByName(SafeString(lblProcess01.Content.ToString()));
             if (lblProcess02.FontWeight == FontWeights.Bold) ProcessExtensions.KillByName(SafeString(lblProcess02.Content.ToString()));
             if (lblProcess03.FontWeight == FontWeights.Bold) ProcessExtensions.KillByName(SafeString(lblProcess03.Content.ToString()));

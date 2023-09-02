@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Media;
 
 namespace AdobeCrapKiller
 {
@@ -24,6 +25,7 @@ namespace AdobeCrapKiller
                 foreach (Process ProcessToKill in ProcessList)
                 {
                     ProcessToKill.Kill();
+                    SystemSounds.Beep.Play();
                 }
 
                 return true;
