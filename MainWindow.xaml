@@ -5,15 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AdobeCrapKiller"
         mc:Ignorable="d"
-        Title="MainWindow" Height="480" Width="300" SnapsToDevicePixels="True" SizeToContent="Height" ResizeMode="CanMinimize">
+        Title="MainWindow" Height="500" Width="300" SnapsToDevicePixels="True" SizeToContent="Height" ResizeMode="CanMinimize">
     <StackPanel>
         <!-- Yes, I still use 'Hungarian notation' for control names because it eliminates accidental errors and is self-documenting! -->
         <Label x:Name="lblTitle" Content="Adobe Crap Killer" FontSize="26.667" HorizontalContentAlignment="Center"/>
         <Label x:Name="lblSubtitle" FontSize="16" HorizontalContentAlignment="Center">
             <TextBlock TextWrapping="Wrap" Text="Eliminates memory-wasting crap that Adobe refuses to let you close in a rational way."/>
         </Label>
-        <Grid x:Name="grdProcesses" Height="300" Width="300" ShowGridLines="True">
+        <Grid x:Name="grdProcesses" Width="300" ShowGridLines="True">
             <Grid.RowDefinitions>
+                <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -37,13 +38,14 @@
             <Label x:Name="lblProcess04" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Content="armsvc" Grid.Row="3"/>
             <Label x:Name="lblProcess05" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Content="Adobe Desktop Service" Grid.Row="4"/>
             <Label x:Name="lblProcess06" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Content="AdobeCollabSync" Grid.Row="5"/>
-            <Label x:Name="lblProcess07" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Content="AdobeIPCBroker" Grid.Row="6"/>
-            <Label x:Name="lblProcess08" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Content="Creative Cloud" Grid.Row="7"/>
+            <Label x:Name="lblProcess07" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Content="Creative Cloud" Grid.Row="6"/>
+            <Label x:Name="lblProcess08" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Content="Creative Cloud Helper" Grid.Row="7"/>
             <Label x:Name="lblProcess09" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Content="CCLibrary" Grid.Row="8"/>
             <Label x:Name="lblProcess10" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Content="CCXProcess" Grid.Row="9"/>
             <Label x:Name="lblProcess11" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Content="AcrobatNotificationClient" Grid.Row="10"/>
             <Label x:Name="lblProcess12" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Content="AdobeNotificationClient" Grid.Row="11"/>
             <Label x:Name="lblProcess13" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Content="AdobeUpdateService" Grid.Row="12"/>
+            <Label x:Name="lblProcess14" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Content="AdobeIPCBroker" Grid.Row="13"/>
         </Grid>
         <Button x:Name="btnKill" Content="Kill That Crap !" FontSize="16" Click="btnKill_Click"/>
     </StackPanel>

@@ -31,6 +31,24 @@ namespace AdobeCrapKiller
 
         }
 
+        private void btnKill_Click(object sender, RoutedEventArgs e)
+        {
+            if (lblProcess01.FontWeight == FontWeights.Bold) ProcessExtensions.KillByName(SafeString(lblProcess01.Content.ToString()));
+            if (lblProcess02.FontWeight == FontWeights.Bold) ProcessExtensions.KillByName(SafeString(lblProcess02.Content.ToString()));
+            if (lblProcess03.FontWeight == FontWeights.Bold) ProcessExtensions.KillByName(SafeString(lblProcess03.Content.ToString()));
+            if (lblProcess04.FontWeight == FontWeights.Bold) ProcessExtensions.KillByName(SafeString(lblProcess04.Content.ToString()));
+            if (lblProcess05.FontWeight == FontWeights.Bold) ProcessExtensions.KillByName(SafeString(lblProcess05.Content.ToString()));
+            if (lblProcess06.FontWeight == FontWeights.Bold) ProcessExtensions.KillByName(SafeString(lblProcess06.Content.ToString()));
+            if (lblProcess07.FontWeight == FontWeights.Bold) ProcessExtensions.KillByName(SafeString(lblProcess07.Content.ToString()));
+            if (lblProcess08.FontWeight == FontWeights.Bold) ProcessExtensions.KillByName(SafeString(lblProcess08.Content.ToString()));
+            if (lblProcess09.FontWeight == FontWeights.Bold) ProcessExtensions.KillByName(SafeString(lblProcess09.Content.ToString()));
+            if (lblProcess10.FontWeight == FontWeights.Bold) ProcessExtensions.KillByName(SafeString(lblProcess10.Content.ToString()));
+            if (lblProcess11.FontWeight == FontWeights.Bold) ProcessExtensions.KillByName(SafeString(lblProcess11.Content.ToString()));
+            if (lblProcess12.FontWeight == FontWeights.Bold) ProcessExtensions.KillByName(SafeString(lblProcess12.Content.ToString()));
+            if (lblProcess13.FontWeight == FontWeights.Bold) ProcessExtensions.KillByName(SafeString(lblProcess13.Content.ToString()));
+            if (lblProcess14.FontWeight == FontWeights.Bold) ProcessExtensions.KillByName(SafeString(lblProcess14.Content.ToString()));
+        }
+
         private void getProcessStatusTimer_Tick(object sender, EventArgs e)
         {
             // HACK: This is simple brute force for now, as a concept test
@@ -47,11 +65,7 @@ namespace AdobeCrapKiller
             lblProcess11.FontWeight = ProcessExtensions.IsRunning(SafeString(lblProcess11.Content.ToString())) ? FontWeights.Bold : FontWeights.Regular;
             lblProcess12.FontWeight = ProcessExtensions.IsRunning(SafeString(lblProcess12.Content.ToString())) ? FontWeights.Bold : FontWeights.Regular;
             lblProcess13.FontWeight = ProcessExtensions.IsRunning(SafeString(lblProcess13.Content.ToString())) ? FontWeights.Bold : FontWeights.Regular;
-        }
-
-        private void btnKill_Click(object sender, RoutedEventArgs e)
-        {
-            if (lblProcess01.FontWeight == FontWeights.Bold) ProcessExtensions.KillByName(SafeString(lblProcess01.Content.ToString()));
+            lblProcess14.FontWeight = ProcessExtensions.IsRunning(SafeString(lblProcess14.Content.ToString())) ? FontWeights.Bold : FontWeights.Regular;
         }
 
         private static string SafeString(string? input)
