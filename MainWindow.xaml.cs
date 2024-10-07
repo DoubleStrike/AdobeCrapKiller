@@ -6,6 +6,7 @@ using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 
 namespace AdobeCrapKiller
 {
@@ -21,9 +22,9 @@ namespace AdobeCrapKiller
             InitializeComponent();
 
             // Restart program and run as admin
-            if (false && !IsAdministrator())
+            if (!IsAdministrator())
             {
-                if (System.Diagnostics.Process.GetCurrentProcess().MainModule is ProcessModule exeModule)
+                if (false && System.Diagnostics.Process.GetCurrentProcess().MainModule is ProcessModule exeModule)
                 {
                     string exeName = SafeString(exeModule.FileName);
                     ProcessStartInfo startInfo = new ProcessStartInfo(exeName);
@@ -32,6 +33,10 @@ namespace AdobeCrapKiller
                     Application.Current.Shutdown();
                     return;
                 }
+            }
+            else
+            {
+                lblTitle.Foreground = new SolidColorBrush(Colors.Red);
             }
 
             // Build process array for future use ?

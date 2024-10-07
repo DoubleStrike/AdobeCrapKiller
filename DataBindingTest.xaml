@@ -1,0 +1,21 @@
+﻿<Window x:Class="AdobeCrapKiller.DataBindingTest"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AdobeCrapKiller"
+        mc:Ignorable="d"
+        Title="DataBindingTest" Height="382" Width="343" Loaded="Window_Loaded">
+    <StackPanel Orientation="Vertical">
+        <ListBox Margin="20" ItemsSource="{Binding ProcessesToBind}" d:ItemsSource="{d:SampleData ItemCount=15}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Path=ProcessName}" Margin="0,0,20,0" />
+                        <CheckBox IsChecked="{Binding Path=Active}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </StackPanel>
+</Window>
