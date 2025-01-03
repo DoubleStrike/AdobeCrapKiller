@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Windows;
 
 namespace AdobeCrapKiller
@@ -42,7 +40,8 @@ namespace AdobeCrapKiller
     {
         public List<SingleProcess> ProcessesToBind
         {
-            get {
+            get
+            {
                 return new List<SingleProcess>()
                 {
                     new SingleProcess("x", true),
