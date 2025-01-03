@@ -41,7 +41,9 @@ namespace AdobeCrapKiller
                 }
             } else
             {
+                // Mark title as red if we are running as admin, to make it more clear
                 lblTitle.Foreground = new SolidColorBrush(Colors.Red);
+                lblTitle.Content += " (Admin Mode)";
             }
 
             // Setup auto-refresh timer properties
