@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Media;
 using System.Security.Principal;
 using System.Windows;
 using System.Windows.Media;
@@ -13,13 +14,14 @@ namespace AdobeCrapKiller
     /// </summary>
     public partial class SimplerStyle : Window
     {
-        public ObservableCollection<AdobeMemoryWastingCrap> processesToKill { get; set; }
+        ObservableCollection<AdobeMemoryWastingCrap> processesToKill { get; set; }
+        System.Windows.Threading.DispatcherTimer getProcessStatusTimer = new System.Windows.Threading.DispatcherTimer();
 
         public SimplerStyle()
         {
             InitializeComponent();
 
-            if (!IsAdministrator() && false)
+            if (!IsAdministrator())
             {
                 // Restart program and run as admin
                 if (!IsAdministrator())
@@ -39,23 +41,59 @@ namespace AdobeCrapKiller
                 }
             }
 
+            // Setup auto-refresh timer properties
+            getProcessStatusTimer.Tick += new EventHandler(getProcessStatusTimer_Tick);
+            getProcessStatusTimer.Interval = new TimeSpan(0, 0, 0, 3);
+
+            // Setup datagrid binding
             processesToKill = new ObservableCollection<AdobeMemoryWastingCrap>();
+            dataGrid.ItemsSource = processesToKill;
+
+            // Do the first refresh
+            //PopulateGrid();
         }
 
         private void btnAutoRefresh_Click(object sender, RoutedEventArgs e)
         {
+            // Toggle button states
+            btnAutoRefresh.IsEnabled = !btnAutoRefresh.IsEnabled;
+            btnStop.IsEnabled = !btnStop.IsEnabled;
 
+            // Start auto-refresh timer to show process state
+            getProcessStatusTimer.Start();
+
+        }
+
+        private void btnKill_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var item in processesToKill)
+            {
+                ProcessExtensions.KillByPath(item.ProcessPath);
+            }
+
+            PopulateGrid();
+            SystemSounds.Beep.Play();
         }
 
         private void btnRefresh_Click(object sender, RoutedEventArgs e)
         {
             PopulateGrid();
-            dataGrid.ItemsSource = processesToKill;
         }
 
         private void btnStop_Click(object sender, RoutedEventArgs e)
         {
+            // Stop auto-refresh timer to show process state
+            getProcessStatusTimer.Stop();
 
+            // Toggle button states
+            btnAutoRefresh.IsEnabled = !btnAutoRefresh.IsEnabled;
+            btnStop.IsEnabled = !btnStop.IsEnabled;
+        }
+
+        private void getProcessStatusTimer_Tick(object? sender, EventArgs e)
+        {
+            //SystemSounds.Beep.Play();
+            PopulateGrid();
         }
 
         private void PopulateGrid()
@@ -63,7 +101,10 @@ namespace AdobeCrapKiller
             List<Process> newProcessesAdobe = ProcessExtensions.GetByPathSubstring("adobe");
             List<Process> newProcessesAcrobat = ProcessExtensions.GetByPathSubstring("acrobat");
 
-            foreach (Process p in newProcessesAdobe) {
+            processesToKill.Clear();
+
+            foreach (Process p in newProcessesAdobe)
+            {
                 processesToKill.Add(new AdobeMemoryWastingCrap(p.MainModule.FileName));
             }
 

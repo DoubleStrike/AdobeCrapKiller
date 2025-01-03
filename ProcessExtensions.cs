@@ -26,7 +26,8 @@ namespace AdobeCrapKiller
                 {
                     if (p.MainModule.FileName.Contains(pathComponent, StringComparison.InvariantCultureIgnoreCase))
                     {
-                        if (!p.MainModule.FileName.Contains("killer", StringComparison.InvariantCultureIgnoreCase)) {
+                        if (!p.MainModule.FileName.Contains("killer", StringComparison.InvariantCultureIgnoreCase))
+                        {
                             processesToReturn.Add(p);
                         }
                     }
@@ -56,6 +57,23 @@ namespace AdobeCrapKiller
             {
                 return false;
             }
+        }
+
+        public static bool KillByPath(string path)
+        {
+            foreach (Process kp in Process.GetProcesses())
+            {
+                try
+                {
+                    if (kp.MainModule.FileName.Equals(path, StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        // Kill process and subtree
+                        kp.Kill(true);
+                    }
+                } catch { }
+            }
+
+            return true;
         }
     }
 }
