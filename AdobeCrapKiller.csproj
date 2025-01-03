@@ -6,11 +6,24 @@
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <ApplicationManifest>app.manifest</ApplicationManifest>
+    <Title>Adobe Crap Killer</Title>
+    <Copyright>(c) 2025 DoubleStrike Consulting, LLC</Copyright>
+    <PackageProjectUrl>https://github.com/DoubleStrike/AdobeCrapKiller</PackageProjectUrl>
+    <Description>Eliminates memory-wasting crap that Adobe refuses to let you close in a rational way.</Description>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/DoubleStrike/AdobeCrapKiller</RepositoryUrl>
+    <AssemblyVersion>$(FileVersion)</AssemblyVersion>
+    <FileVersion>$(FileVersion)</FileVersion>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
     <None Update="app.manifest">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
     </None>
   </ItemGroup>
 
