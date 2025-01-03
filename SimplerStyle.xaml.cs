@@ -21,24 +21,27 @@ namespace AdobeCrapKiller
         {
             InitializeComponent();
 
+            // Restart program and run as admin
             if (!IsAdministrator())
             {
-                // Restart program and run as admin
-                if (!IsAdministrator())
+                if (System.Diagnostics.Process.GetCurrentProcess().MainModule is ProcessModule exeModule)
                 {
-                    if (false && System.Diagnostics.Process.GetCurrentProcess().MainModule is ProcessModule exeModule)
+                    string elevateTitle = "Restart program as Administrator?";
+                    string elevateMessage = "Admin privileges are required to kill 100% of all Adobe crap. \n \nSelect yes to run this app as admin. \nSelect no to try running as-is.";
+                    if (MessageBox.Show(elevateMessage, elevateTitle, MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                     {
                         string exeName = SafeString(exeModule.FileName);
                         ProcessStartInfo startInfo = new ProcessStartInfo(exeName);
                         startInfo.Verb = "runas";
+                        startInfo.UseShellExecute = true;
                         System.Diagnostics.Process.Start(startInfo);
                         Application.Current.Shutdown();
                         return;
                     }
-                } else
-                {
-                    lblTitle.Foreground = new SolidColorBrush(Colors.Red);
                 }
+            } else
+            {
+                lblTitle.Foreground = new SolidColorBrush(Colors.Red);
             }
 
             // Setup auto-refresh timer properties
