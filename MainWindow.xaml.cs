@@ -10,14 +10,14 @@ using System.Windows.Media;
 namespace AdobeCrapKiller
 {
     /// <summary>
-    /// Interaction logic for SimplerStyle.xaml
+    /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class SimplerStyle : Window
+    public partial class MainWindow : Window
     {
         ObservableCollection<AdobeMemoryWastingCrap> processesToKill { get; set; }
         System.Windows.Threading.DispatcherTimer getProcessStatusTimer = new System.Windows.Threading.DispatcherTimer();
 
-        public SimplerStyle()
+        public MainWindow()
         {
             InitializeComponent();
 
