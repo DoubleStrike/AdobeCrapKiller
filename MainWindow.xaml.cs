@@ -53,11 +53,9 @@ namespace AdobeCrapKiller
             // Setup datagrid binding
             processesToKill = new ObservableCollection<AdobeMemoryWastingCrap>();
             dataGrid.ItemsSource = processesToKill;
-
-            // Do the first refresh
-            //PopulateGrid();
         }
 
+        #region Event handlers
         private void btnAutoRefresh_Click(object sender, RoutedEventArgs e)
         {
             // Toggle button states
@@ -101,6 +99,14 @@ namespace AdobeCrapKiller
             PopulateGrid();
         }
 
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            // Do the first refresh
+            PopulateGrid();
+        }
+        #endregion
+
+        #region Local methods
         private void PopulateGrid()
         {
             List<Process> newProcessesAdobe = ProcessExtensions.GetByPathSubstring("adobe");
@@ -141,6 +147,7 @@ namespace AdobeCrapKiller
 
             return "";
         }
+        #endregion
     }
 
     public class AdobeMemoryWastingCrap

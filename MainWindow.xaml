@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AdobeCrapKiller"
         mc:Ignorable="d"
-        Title="SimplerStyle" SizeToContent="WidthAndHeight" Width="716" Height="556" WindowStyle="ThreeDBorderWindow">
+        Title="SimplerStyle" SizeToContent="WidthAndHeight" Width="716" Height="556" Loaded="Window_Loaded">
     <Grid>
         <StackPanel VerticalAlignment="Top">
             <!-- Yes, I still use 'Hungarian notation' for control names because it eliminates accidental errors and is self-documenting! -->
