@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Media;
+using System.Windows.Documents;
 
 namespace AdobeCrapKiller
 {
@@ -11,6 +13,27 @@ namespace AdobeCrapKiller
         public static Process[] GetByName(string name)
         {
             return Process.GetProcessesByName(name);
+        }
+
+        public static List<Process> GetByPathSubstring(string pathComponent)
+        {
+            List<Process> processesToReturn = new List<Process>();
+
+            // Cycle through all processes and do a string match
+            foreach (Process p in Process.GetProcesses())
+            {
+                try
+                {
+                    if (p.MainModule.FileName.Contains(pathComponent, StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        if (!p.MainModule.FileName.Contains("killer", StringComparison.InvariantCultureIgnoreCase)) {
+                            processesToReturn.Add(p);
+                        }
+                    }
+                } catch (Exception) { }
+            }
+
+            return processesToReturn;
         }
 
         public static bool KillByName(string name)

@@ -1,0 +1,33 @@
+﻿<Window x:Class="AdobeCrapKiller.SimplerStyle"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AdobeCrapKiller"
+        mc:Ignorable="d"
+        Title="SimplerStyle" SizeToContent="WidthAndHeight" Width="716" Height="556" WindowStyle="ThreeDBorderWindow">
+    <Grid>
+        <StackPanel VerticalAlignment="Top">
+            <!-- Yes, I still use 'Hungarian notation' for control names because it eliminates accidental errors and is self-documenting! -->
+            <Label x:Name="lblTitle" Content="Adobe Crap Killer" FontSize="26" HorizontalContentAlignment="Center"/>
+            <Label x:Name="lblSubtitle" FontSize="16" HorizontalContentAlignment="Center">
+                <TextBlock TextWrapping="Wrap" Text="Eliminates memory-wasting crap that Adobe refuses to let you close in a rational way."/>
+            </Label>
+            <Grid Width="716">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Button x:Name="btnRefresh" Content="Refresh" FontSize="18" Click="btnRefresh_Click" Grid.Column="0"/>
+                <Button x:Name="btnAutoRefresh" Content="Auto-Refresh (3 sec)" FontSize="18" Click="btnAutoRefresh_Click" Grid.Column="1"/>
+                <Button x:Name="btnStop" Content="Stop" FontSize="18" Click="btnStop_Click" Grid.Column="2"/>
+            </Grid>
+            <DataGrid x:Name="dataGrid" d:ItemsSource="{Binding Path=processesToKill, Mode=OneWay, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}"/>
+            <Button x:Name="btnKill" Content="Kill That Crap !" FontSize="18" FontWeight="Bold" FontStyle="Italic"/>
+        </StackPanel>
+    </Grid>
+</Window>
