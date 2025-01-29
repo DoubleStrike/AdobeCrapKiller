@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Media;
+using System.Reflection;
 using System.Security.Principal;
 using System.Windows;
 using System.Windows.Media;
@@ -44,6 +45,12 @@ namespace AdobeCrapKiller
                 // Mark title as red if we are running as admin, to make it more clear
                 lblTitle.Foreground = new SolidColorBrush(Colors.Red);
                 lblTitle.Content += " (Admin Mode)";
+            }
+
+            // Show version in titlebar
+            if (Assembly.GetExecutingAssembly().GetName().Version != null) {
+                this.Title += " v";
+                this.Title += Assembly.GetExecutingAssembly().GetName().Version.ToString();
             }
 
             // Setup auto-refresh timer properties
