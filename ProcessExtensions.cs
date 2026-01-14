@@ -16,7 +16,7 @@ namespace AdobeCrapKiller
 
         public static List<Process> GetByPathSubstring(string pathComponent)
         {
-            List<Process> processesToReturn = new List<Process>();
+            List<Process> processesToReturn = new();
 
             // Cycle through all processes and do a string match
             foreach (Process p in Process.GetProcesses())

@@ -44,12 +44,12 @@ namespace AdobeCrapKiller
             {
                 return new List<SingleProcess>()
                 {
-                    new SingleProcess("x", true),
-                    new SingleProcess("a"),
-                    new SingleProcess("b"),
-                    new SingleProcess("c"),
-                    new SingleProcess("d"),
-                    new SingleProcess("e"),
+                    new("x", true),
+                    new("a"),
+                    new("b"),
+                    new("c"),
+                    new("d"),
+                    new("e"),
                 };
             }
         }

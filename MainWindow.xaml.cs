@@ -16,7 +16,7 @@ namespace AdobeCrapKiller
     public partial class MainWindow : Window
     {
         ObservableCollection<AdobeMemoryWastingCrap> processesToKill { get; set; }
-        System.Windows.Threading.DispatcherTimer getProcessStatusTimer = new System.Windows.Threading.DispatcherTimer();
+        private System.Windows.Threading.DispatcherTimer getProcessStatusTimer = new();
 
         public MainWindow()
         {
@@ -32,9 +32,11 @@ namespace AdobeCrapKiller
                     if (MessageBox.Show(elevateMessage, elevateTitle, MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                     {
                         string exeName = SafeString(exeModule.FileName);
-                        ProcessStartInfo startInfo = new ProcessStartInfo(exeName);
-                        startInfo.Verb = "runas";
-                        startInfo.UseShellExecute = true;
+                        ProcessStartInfo startInfo = new(exeName)
+                        {
+                            Verb = "runas",
+                            UseShellExecute = true
+                        };
                         System.Diagnostics.Process.Start(startInfo);
                         Application.Current.Shutdown();
                         return;
@@ -139,7 +141,7 @@ namespace AdobeCrapKiller
         private static bool IsAdministrator()
         {
             WindowsIdentity identity = WindowsIdentity.GetCurrent();
-            WindowsPrincipal principal = new WindowsPrincipal(identity);
+            WindowsPrincipal principal = new(identity);
             return principal.IsInRole(WindowsBuiltInRole.Administrator);
         }
 
