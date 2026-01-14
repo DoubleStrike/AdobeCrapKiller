@@ -13,7 +13,8 @@ namespace AdobeCrapKiller {
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window {
-        ObservableCollection<AdobeMemoryWastingCrap> processesToKill { get; set; }
+        // Change the property to be nullable to satisfy CS8618
+        ObservableCollection<AdobeMemoryWastingCrap>? processesToKill { get; set; }
         private System.Windows.Threading.DispatcherTimer getProcessStatusTimer = new();
 
         public MainWindow() {
@@ -42,9 +43,10 @@ namespace AdobeCrapKiller {
             }
 
             // Show version in titlebar
-            if (Assembly.GetExecutingAssembly().GetName().Version != null) {
+            Version? version = Assembly.GetExecutingAssembly().GetName().Version;
+            if (version != null) {
                 this.Title += " v";
-                this.Title += Assembly.GetExecutingAssembly().GetName().Version.ToString();
+                this.Title += version.ToString();
             }
 
             // Setup auto-refresh timer properties
@@ -68,6 +70,8 @@ namespace AdobeCrapKiller {
         }
 
         private void btnKill_Click(object sender, RoutedEventArgs e) {
+            if (processesToKill == null) return;
+
             foreach (var item in processesToKill) {
                 ProcessExtensions.KillByPath(item.ProcessPath);
             }
@@ -105,14 +109,16 @@ namespace AdobeCrapKiller {
             List<Process> newProcessesAdobe = ProcessExtensions.GetByPathSubstring("adobe");
             List<Process> newProcessesAcrobat = ProcessExtensions.GetByPathSubstring("acrobat");
 
+            processesToKill ??= new();
+
             processesToKill.Clear();
 
             foreach (Process p in newProcessesAdobe) {
-                processesToKill.Add(new AdobeMemoryWastingCrap(p.MainModule.FileName));
+                if (p.MainModule?.FileName != null) processesToKill.Add(new AdobeMemoryWastingCrap(p.MainModule.FileName));
             }
 
             foreach (Process p in newProcessesAcrobat) {
-                processesToKill.Add(new AdobeMemoryWastingCrap(p.MainModule.FileName));
+                if (p.MainModule?.FileName != null) processesToKill.Add(new AdobeMemoryWastingCrap(p.MainModule.FileName));
             }
         }
 

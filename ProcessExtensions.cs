@@ -17,10 +17,12 @@ namespace AdobeCrapKiller {
             // Cycle through all processes and do a string match
             foreach (Process p in Process.GetProcesses()) {
                 try {
-                    if (p.MainModule.FileName.Contains(pathComponent, StringComparison.InvariantCultureIgnoreCase)) {
-                        if (!p.MainModule.FileName.Contains("killer", StringComparison.InvariantCultureIgnoreCase)) {
-                            processesToReturn.Add(p);
-                        }
+                    if (p.MainModule == null || !p.MainModule.FileName.Contains(pathComponent, StringComparison.InvariantCultureIgnoreCase)) {
+                        continue;
+                    }
+
+                    if (!p.MainModule.FileName.Contains("killer", StringComparison.InvariantCultureIgnoreCase)) {
+                        processesToReturn.Add(p);
                     }
                 } catch (Exception) { }
             }
@@ -49,7 +51,9 @@ namespace AdobeCrapKiller {
         public static bool KillByPath(string path) {
             foreach (Process kp in Process.GetProcesses()) {
                 try {
-                    if (kp.MainModule.FileName.Equals(path, StringComparison.InvariantCultureIgnoreCase)) {
+                    if (kp == null || kp.MainModule == null || kp.MainModule.FileName == null) continue;
+
+                    if (kp.MainModule != null && kp.MainModule.FileName.Equals(path, StringComparison.InvariantCultureIgnoreCase)) {
                         // Kill process and subtree
                         kp.Kill(true);
                     }
