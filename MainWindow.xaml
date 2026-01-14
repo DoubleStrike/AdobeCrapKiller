@@ -7,7 +7,11 @@
         mc:Ignorable="d"
         Title="Adobe Crap Killer" SizeToContent="WidthAndHeight" Width="716" Height="556" Loaded="Window_Loaded">
     <Grid>
-        <StackPanel VerticalAlignment="Top">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="305*"/>
+            <ColumnDefinition Width="53*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel VerticalAlignment="Top" Grid.ColumnSpan="2">
             <!-- Yes, I still use 'Hungarian notation' for control names because it eliminates accidental errors and is self-documenting! -->
             <Label x:Name="lblTitle" Content="Adobe Crap Killer" FontSize="26" HorizontalContentAlignment="Center"/>
             <Label x:Name="lblSubtitle" FontSize="16" HorizontalContentAlignment="Center">

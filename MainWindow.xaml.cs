@@ -8,32 +8,25 @@ using System.Security.Principal;
 using System.Windows;
 using System.Windows.Media;
 
-namespace AdobeCrapKiller
-{
+namespace AdobeCrapKiller {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
-    {
+    public partial class MainWindow : Window {
         ObservableCollection<AdobeMemoryWastingCrap> processesToKill { get; set; }
         private System.Windows.Threading.DispatcherTimer getProcessStatusTimer = new();
 
-        public MainWindow()
-        {
+        public MainWindow() {
             InitializeComponent();
 
             // Restart program and run as admin
-            if (!IsAdministrator())
-            {
-                if (System.Diagnostics.Process.GetCurrentProcess().MainModule is ProcessModule exeModule)
-                {
+            if (!IsAdministrator()) {
+                if (System.Diagnostics.Process.GetCurrentProcess().MainModule is ProcessModule exeModule) {
                     string elevateTitle = "Restart program as Administrator?";
                     string elevateMessage = "Admin privileges are required to kill 100% of all Adobe crap. \n \nSelect yes to run this app as admin. \nSelect no to try running as-is.";
-                    if (MessageBox.Show(elevateMessage, elevateTitle, MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-                    {
+                    if (MessageBox.Show(elevateMessage, elevateTitle, MessageBoxButton.YesNo) == MessageBoxResult.Yes) {
                         string exeName = SafeString(exeModule.FileName);
-                        ProcessStartInfo startInfo = new(exeName)
-                        {
+                        ProcessStartInfo startInfo = new(exeName) {
                             Verb = "runas",
                             UseShellExecute = true
                         };
@@ -42,8 +35,7 @@ namespace AdobeCrapKiller
                         return;
                     }
                 }
-            } else
-            {
+            } else {
                 // Mark title as red if we are running as admin, to make it more clear
                 lblTitle.Foreground = new SolidColorBrush(Colors.Red);
                 lblTitle.Content += " (Admin Mode)";
@@ -65,8 +57,7 @@ namespace AdobeCrapKiller
         }
 
         #region Event handlers
-        private void btnAutoRefresh_Click(object sender, RoutedEventArgs e)
-        {
+        private void btnAutoRefresh_Click(object sender, RoutedEventArgs e) {
             // Toggle button states
             btnAutoRefresh.IsEnabled = !btnAutoRefresh.IsEnabled;
             btnStop.IsEnabled = !btnStop.IsEnabled;
@@ -76,10 +67,8 @@ namespace AdobeCrapKiller
 
         }
 
-        private void btnKill_Click(object sender, RoutedEventArgs e)
-        {
-            foreach (var item in processesToKill)
-            {
+        private void btnKill_Click(object sender, RoutedEventArgs e) {
+            foreach (var item in processesToKill) {
                 ProcessExtensions.KillByPath(item.ProcessPath);
             }
 
@@ -87,13 +76,11 @@ namespace AdobeCrapKiller
             SystemSounds.Beep.Play();
         }
 
-        private void btnRefresh_Click(object sender, RoutedEventArgs e)
-        {
+        private void btnRefresh_Click(object sender, RoutedEventArgs e) {
             PopulateGrid();
         }
 
-        private void btnStop_Click(object sender, RoutedEventArgs e)
-        {
+        private void btnStop_Click(object sender, RoutedEventArgs e) {
             // Stop auto-refresh timer to show process state
             getProcessStatusTimer.Stop();
 
@@ -102,34 +89,29 @@ namespace AdobeCrapKiller
             btnStop.IsEnabled = !btnStop.IsEnabled;
         }
 
-        private void getProcessStatusTimer_Tick(object? sender, EventArgs e)
-        {
+        private void getProcessStatusTimer_Tick(object? sender, EventArgs e) {
             //SystemSounds.Beep.Play();
             PopulateGrid();
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
+        private void Window_Loaded(object sender, RoutedEventArgs e) {
             // Do the first refresh
             PopulateGrid();
         }
         #endregion
 
         #region Local methods
-        private void PopulateGrid()
-        {
+        private void PopulateGrid() {
             List<Process> newProcessesAdobe = ProcessExtensions.GetByPathSubstring("adobe");
             List<Process> newProcessesAcrobat = ProcessExtensions.GetByPathSubstring("acrobat");
 
             processesToKill.Clear();
 
-            foreach (Process p in newProcessesAdobe)
-            {
+            foreach (Process p in newProcessesAdobe) {
                 processesToKill.Add(new AdobeMemoryWastingCrap(p.MainModule.FileName));
             }
 
-            foreach (Process p in newProcessesAcrobat)
-            {
+            foreach (Process p in newProcessesAcrobat) {
                 processesToKill.Add(new AdobeMemoryWastingCrap(p.MainModule.FileName));
             }
         }
@@ -138,8 +120,7 @@ namespace AdobeCrapKiller
         /// Check if program is running as admin
         /// </summary>
         /// <returns>true, if running with elevated privileges</returns>
-        private static bool IsAdministrator()
-        {
+        private static bool IsAdministrator() {
             WindowsIdentity identity = WindowsIdentity.GetCurrent();
             WindowsPrincipal principal = new(identity);
             return principal.IsInRole(WindowsBuiltInRole.Administrator);
@@ -150,8 +131,7 @@ namespace AdobeCrapKiller
         /// </summary>
         /// <param name="input">input nullable string</param>
         /// <returns>the input string if not empty, else an empty string</returns>
-        private static string SafeString(string? input)
-        {
+        private static string SafeString(string? input) {
             if (!string.IsNullOrWhiteSpace(input)) return input;
 
             return "";
@@ -159,12 +139,10 @@ namespace AdobeCrapKiller
         #endregion
     }
 
-    public class AdobeMemoryWastingCrap
-    {
+    public class AdobeMemoryWastingCrap {
         public string ProcessPath { get; set; }
 
-        public AdobeMemoryWastingCrap(string processPath)
-        {
+        public AdobeMemoryWastingCrap(string processPath) {
             ProcessPath = processPath;
         }
     }

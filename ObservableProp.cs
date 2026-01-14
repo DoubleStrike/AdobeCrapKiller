@@ -1,13 +1,10 @@
 ﻿using System.ComponentModel;
 
-namespace AdobeCrapKiller
-{
-    public class ObservableProp<T> : INotifyPropertyChanged
-    {
+namespace AdobeCrapKiller {
+    public class ObservableProp<T> : INotifyPropertyChanged {
         private T _value;
 
-        public T Value
-        {
+        public T Value {
             get => _value;
             set { _value = value; NotifyPropertyChanged(nameof(Value)); }
         }
