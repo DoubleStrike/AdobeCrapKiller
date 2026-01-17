@@ -1,4 +1,6 @@
-﻿using System;
+﻿#define CODEPATHNEW
+
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -143,15 +145,22 @@ namespace AdobeCrapKiller {
         private void PopulateGrid() {
             // TODO: This is inefficient - build a process list once and filter from that instead of querying twice
             Logger.Log("PopulateGrid(): Populating process list grid.");
+#if CODEPATHOLD
             List<Process> newProcessesAdobe = ProcessExtensions.GetByPathSubstring("adobe");
             Logger.Log("PopulateGrid(): Found " + newProcessesAdobe.Count + " Adobe-related processes.");
             List<Process> newProcessesAcrobat = ProcessExtensions.GetByPathSubstring("acrobat");
             Logger.Log("PopulateGrid(): Found " + newProcessesAcrobat.Count + " Acrobat-related processes.");
+#else
+            // New code for testing
+            List<Process> newProcessesBoth = ProcessExtensions.GetByPathSubstrings(new[] { "adobe", "acrobat" });
+            Logger.Log("PopulateGrid(): NEW CODE: Found " + newProcessesBoth.Count + " Adobe/Acrobat-related processes.");
+#endif
 
             processesToKill ??= new();
 
             processesToKill.Clear();
 
+#if CODEPATHOLD
             foreach (Process p in newProcessesAdobe) {
                 if (p.MainModule?.FileName != null) {
                     processesToKill.Add(new AdobeMemoryWastingCrap(p.MainModule.FileName, p.Id));
@@ -165,6 +174,14 @@ namespace AdobeCrapKiller {
                     Logger.Log($"PopulateGrid(): Added Acrobat process to kill list: '{p.MainModule.FileName}' (ID: {p.Id})");
                 }
             }
+#else
+            foreach (Process p in newProcessesBoth) {
+                if (p.MainModule?.FileName != null) {
+                    processesToKill.Add(new AdobeMemoryWastingCrap(p.MainModule.FileName, p.Id));
+                    Logger.Log($"PopulateGrid(): Added Acrobat process to kill list: '{p.MainModule.FileName}' (ID: {p.Id})");
+                }
+            }
+#endif
 
             Logger.Log("PopulateGrid(): Process list grid population completed.");
         }
@@ -189,7 +206,7 @@ namespace AdobeCrapKiller {
 
             return "";
         }
-        #endregion
+#endregion
     }
 
     public class AdobeMemoryWastingCrap {

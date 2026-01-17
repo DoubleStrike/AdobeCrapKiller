@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Media;
 using System.Windows;
 
@@ -63,6 +64,39 @@ namespace AdobeCrapKiller {
             Logger.Log($"GetByPathSubstring(): Found {processesToReturn.Count} matching processes.");
             return processesToReturn;
         }
+
+        // New function to match any of multiple substrings
+        public static List<Process> GetByPathSubstrings(IReadOnlyCollection<string> pathComponents) {
+            Logger.Log("GetByPathSubstrings(): Searching for processes with path components: " + string.Join(", ", pathComponents));
+            List<Process> processesToReturn = new();
+
+            foreach (Process p in Process.GetProcesses()) {
+                try {
+                    Logger.Log($"GetByPathSubstrings(): Checking process: {p.ProcessName}");
+
+                    var module = p.MainModule;
+                    if (module == null)
+                        continue;
+
+                    string fileName = module.FileName;
+
+                    // Exclude self early
+                    if (fileName.Contains("killer", StringComparison.OrdinalIgnoreCase))
+                        continue;
+
+                    // Match ANY provided substring
+                    if (pathComponents.Any(pc => fileName.Contains(pc, StringComparison.OrdinalIgnoreCase))) {
+                        processesToReturn.Add(p);
+                    }
+                } catch (System.ComponentModel.Win32Exception e) {
+                    Logger.Log($"  GetByPathSubstrings(): Error reading process {p.ProcessName}: {e.Message}");
+                } catch (Exception) { }
+            }
+
+            Logger.Log($"GetByPathSubstrings(): Found {processesToReturn.Count} matching processes.");
+            return processesToReturn;
+        }
+
 
         /// <summary>
         /// Attempts to terminate the process with the specified identifier and its child processes.
