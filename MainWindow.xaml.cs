@@ -133,6 +133,13 @@ namespace AdobeCrapKiller {
         #endregion
 
         #region Local methods
+        /// <summary>
+        /// Populates the process list grid with currently running Adobe and Acrobat processes targeted for termination.
+        /// </summary>
+        /// <remarks>This method refreshes the internal list of processes to be killed by scanning for
+        /// processes whose executable paths contain "adobe" or "acrobat". The process list is cleared and repopulated
+        /// each time this method is called. This method does not terminate any processes; it only updates the list for
+        /// subsequent actions.</remarks>
         private void PopulateGrid() {
             // TODO: This is inefficient - build a process list once and filter from that instead of querying twice
             Logger.Log("PopulateGrid(): Populating process list grid.");
