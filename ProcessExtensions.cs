@@ -70,11 +70,33 @@ namespace AdobeCrapKiller {
                         kp.Kill(true);
                     }
                 } catch { 
-                    Logger.Log("KillByPath({path}): Failed to kill process: " + kp.ProcessName);
+                    Logger.Log($"KillByPath(): Failed to kill process: {kp.ProcessName}");
                 }
 
-                Logger.Log("KillByPath({path}): Successfully killed process: " + kp.ProcessName);
+                Logger.Log($"KillByPath(): Successfully killed process: {kp.ProcessName}");
             }
+
+            return true;
+        }
+
+        public static bool KillById(int Id) {
+            Logger.Log("KillById(): Attempting to kill processes with ID: " + Id);
+
+            try {
+                Process kp = Process.GetProcessById(Id);
+
+                if (kp == null || kp.MainModule == null || kp.MainModule.FileName == null) {
+                    Logger.Log("KillById(): No process found with ID: " + Id);
+                    return false;
+                }
+
+                // Kill process and subtree
+                kp.Kill(true);
+            } catch {
+                Logger.Log("KillById(): Failed to kill process with ID: " + Id);
+            }
+
+            Logger.Log("KillById(): Successfully killed process with ID: " + Id);
 
             return true;
         }

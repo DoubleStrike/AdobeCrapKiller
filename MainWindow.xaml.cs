@@ -89,8 +89,8 @@ namespace AdobeCrapKiller {
             if (processesToKill == null) return;
 
             foreach (var item in processesToKill) {
-                Logger.Log("btnKill_Click(): Killing process at path: " + item.ProcessPath);
-                ProcessExtensions.KillByPath(item.ProcessPath);
+                Logger.Log($"btnKill_Click(): Killing process at path: '{item.ProcessPath}' (ID: {item.ProcessId})");
+                ProcessExtensions.KillById(item.ProcessId);
             }
 
             PopulateGrid();
@@ -147,15 +147,15 @@ namespace AdobeCrapKiller {
 
             foreach (Process p in newProcessesAdobe) {
                 if (p.MainModule?.FileName != null) {
-                    processesToKill.Add(new AdobeMemoryWastingCrap(p.MainModule.FileName));
-                    Logger.Log("PopulateGrid(): Added Adobe process to kill list: " + p.MainModule.FileName);
+                    processesToKill.Add(new AdobeMemoryWastingCrap(p.MainModule.FileName, p.Id));
+                    Logger.Log($"PopulateGrid(): Added Adobe process to kill list: '{p.MainModule.FileName}' (ID: {p.Id})");
                 }
             }
 
             foreach (Process p in newProcessesAcrobat) {
                 if (p.MainModule?.FileName != null) {
-                    processesToKill.Add(new AdobeMemoryWastingCrap(p.MainModule.FileName));
-                    Logger.Log("PopulateGrid(): Added Acrobat process to kill list: " + p.MainModule.FileName);
+                    processesToKill.Add(new AdobeMemoryWastingCrap(p.MainModule.FileName, p.Id));
+                    Logger.Log($"PopulateGrid(): Added Acrobat process to kill list: '{p.MainModule.FileName}' (ID: {p.Id})");
                 }
             }
 
@@ -187,9 +187,16 @@ namespace AdobeCrapKiller {
 
     public class AdobeMemoryWastingCrap {
         public string ProcessPath { get; set; }
+        public int ProcessId { get; set; }
 
         public AdobeMemoryWastingCrap(string processPath) {
             ProcessPath = processPath;
+            ProcessId = 0;
+        }
+
+        public AdobeMemoryWastingCrap(string processPath, int processId) {
+            ProcessPath = processPath;
+            ProcessId = processId;
         }
     }
 }
