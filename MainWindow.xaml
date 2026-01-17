@@ -27,7 +27,7 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <Button x:Name="btnRefresh" Content="Refresh" FontSize="18" Click="btnRefresh_Click" Grid.Column="0"/>
-                <Button x:Name="btnAutoRefresh" Content="Auto-Refresh (15 sec.)" FontSize="18" Click="btnAutoRefresh_Click" Grid.Column="1"/>
+                <Button x:Name="btnAutoRefresh" Content="Auto-Refresh (10 sec.)" FontSize="18" Click="btnAutoRefresh_Click" Grid.Column="1"/>
                 <Button x:Name="btnStop" Content="Stop Auto-Refresh" FontSize="18" Click="btnStop_Click" Grid.Column="2" IsEnabled="false"/>
             </Grid>
             <DataGrid x:Name="dataGrid" d:ItemsSource="{Binding Path=processesToKill, Mode=OneWay, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}"/>

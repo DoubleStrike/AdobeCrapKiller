@@ -61,7 +61,7 @@ namespace AdobeCrapKiller {
             // Setup auto-refresh timer properties
             Logger.Log("MainWindow(): Setting up auto-refresh timer.", LogLevel.Info);
             getProcessStatusTimer.Tick += new EventHandler(getProcessStatusTimer_Tick);
-            getProcessStatusTimer.Interval = new TimeSpan(0, 0, 0, 15);
+            getProcessStatusTimer.Interval = new TimeSpan(0, 0, 0, 10);
 
             // Setup datagrid binding
             Logger.Log("MainWindow(): Setting up datagrid binding.", LogLevel.Info);
@@ -117,7 +117,7 @@ namespace AdobeCrapKiller {
 
         private void getProcessStatusTimer_Tick(object? sender, EventArgs e) {
             Logger.Log("getProcessStatusTimer_Tick(): Auto-refresh tick triggered.", LogLevel.Info);
-            //SystemSounds.Beep.Play();
+            SystemSounds.Beep.Play();
             PopulateGrid();
             Logger.Log("getProcessStatusTimer_Tick(): Auto-refresh tick completed.", LogLevel.Info);
         }
