@@ -7,14 +7,14 @@
     <UseWPF>true</UseWPF>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <Title>Adobe Crap Killer</Title>
-    <Copyright>(c) 2025 DoubleStrike Consulting, LLC</Copyright>
+    <Copyright>(c) 2025-6 DoubleStrike Consulting, LLC</Copyright>
     <PackageProjectUrl>https://github.com/DoubleStrike/AdobeCrapKiller</PackageProjectUrl>
     <Description>Eliminates memory-wasting crap that Adobe refuses to let you close in a rational way.</Description>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/DoubleStrike/AdobeCrapKiller</RepositoryUrl>
     <AssemblyVersion>$(Version)</AssemblyVersion>
     <FileVersion>$(Version)</FileVersion>
-    <Version>1.0.4</Version>
+    <Version>1.1.0</Version>
     <ApplicationIcon>ACK_MainIcon.ico</ApplicationIcon>
   </PropertyGroup>
 

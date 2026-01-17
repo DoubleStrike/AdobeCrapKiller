@@ -57,50 +57,6 @@ namespace AdobeCrapKiller {
             return processesToReturn;
         }
 
-        // OBSOLETE: Use KillById instead
-        public static bool KillByName_OBSOLETE(string name) {
-            Logger.Log("KillByName(): Attempting to kill processes with name: " + name);
-
-            try {
-                Process[] ProcessList = GetByName(name);
-
-                // Early return if empty
-                if (ProcessList.Length == 0) return false;
-
-                foreach (Process ProcessToKill in ProcessList) {
-                    ProcessToKill.Kill();
-                    SystemSounds.Beep.Play();
-                }
-
-                Logger.Log("KillByName(): Successfully killed processes with name: " + name);
-                return true;
-            } catch {
-                Logger.Log("KillByName(): Failed to kill processes with name: " + name);
-                return false;
-            }
-        }
-
-        // OBSOLETE: Use KillById instead
-        public static bool KillByPath_OBSOLETE(string path) {
-            Logger.Log("KillByPath(): Attempting to kill processes with path: " + path);
-            foreach (Process kp in Process.GetProcesses()) {
-                try {
-                    if (kp == null || kp.MainModule == null || kp.MainModule.FileName == null) continue;
-
-                    if (kp.MainModule != null && kp.MainModule.FileName.Equals(path, StringComparison.InvariantCultureIgnoreCase)) {
-                        // Kill process and subtree
-                        kp.Kill(true);
-                    }
-                } catch {
-                    Logger.Log($"KillByPath(): Failed to kill process: {kp.ProcessName}");
-                }
-
-                Logger.Log($"KillByPath(): Successfully killed process: {kp.ProcessName}");
-            }
-
-            return true;
-        }
-
         /// <summary>
         /// Attempts to terminate the process with the specified identifier and its child processes.
         /// </summary>
@@ -124,10 +80,10 @@ namespace AdobeCrapKiller {
                 kp.Kill(true);
             } catch {
                 Logger.Log("KillById(): Failed to kill process with ID: " + Id);
+                return false;
             }
 
             Logger.Log("KillById(): Successfully killed process with ID: " + Id);
-
             return true;
         }
     }
