@@ -29,12 +29,12 @@ namespace AdobeCrapKiller {
         /// <returns>A list of <see cref="Process"/> objects representing processes whose main module file path contains at least
         /// one of the specified substrings. The list is empty if no matching processes are found.</returns>
         public static List<Process> GetByPathSubstrings(IReadOnlyCollection<string> pathComponents) {
-            Logger.Log("GetByPathSubstrings(): Searching for processes with path components: " + string.Join(", ", pathComponents));
+            Logger.Log("GetByPathSubstrings(): Searching for processes with path components: " + string.Join(", ", pathComponents), LogLevel.Info);
             List<Process> processesToReturn = new();
 
             foreach (Process p in Process.GetProcesses()) {
                 try {
-                    Logger.Log($"GetByPathSubstrings(): Checking process: {p.ProcessName}");
+                    Logger.Log($"GetByPathSubstrings(): Checking process: {p.ProcessName}", LogLevel.Info);
 
                     var module = p.MainModule;
                     if (module == null)
@@ -51,11 +51,11 @@ namespace AdobeCrapKiller {
                         processesToReturn.Add(p);
                     }
                 } catch (System.ComponentModel.Win32Exception e) {
-                    Logger.Log($"  GetByPathSubstrings(): Error reading process {p.ProcessName}: {e.Message}");
+                    Logger.Log($"  GetByPathSubstrings(): Error reading process {p.ProcessName}: {e.Message}", LogLevel.Warning);
                 } catch (Exception) { }
             }
 
-            Logger.Log($"GetByPathSubstrings(): Found {processesToReturn.Count} matching processes.");
+            Logger.Log($"GetByPathSubstrings(): Found {processesToReturn.Count} matching processes.", LogLevel.Info);
             return processesToReturn;
         }
 
@@ -69,24 +69,24 @@ namespace AdobeCrapKiller {
         /// <param name="Id">The unique identifier of the process to terminate. Must correspond to an active process.</param>
         /// <returns>true if the process and its child processes were successfully terminated; otherwise, false.</returns>
         public static bool KillById(int Id) {
-            Logger.Log("KillById(): Attempting to kill processes with ID: " + Id);
+            Logger.Log("KillById(): Attempting to kill processes with ID: " + Id, LogLevel.Info);
 
             try {
                 Process kp = Process.GetProcessById(Id);
 
                 if (kp == null || kp.MainModule == null || kp.MainModule.FileName == null) {
-                    Logger.Log("KillById(): No process found with ID: " + Id);
+                    Logger.Log("KillById(): No process found with ID: " + Id, LogLevel.Info);
                     return false;
                 }
 
                 // Kill process and subtree
                 kp.Kill(true);
             } catch {
-                Logger.Log("KillById(): Failed to kill process with ID: " + Id);
+                Logger.Log("KillById(): Failed to kill process with ID: " + Id, LogLevel.Warning);
                 return false;
             }
 
-            Logger.Log("KillById(): Successfully killed process with ID: " + Id);
+            Logger.Log("KillById(): Successfully killed process with ID: " + Id, LogLevel.Info);
             return true;
         }
     }
