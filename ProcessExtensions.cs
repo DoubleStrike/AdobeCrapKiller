@@ -36,7 +36,8 @@ namespace AdobeCrapKiller {
             return processesToReturn;
         }
 
-        public static bool KillByName(string name) {
+        // OBSOLETE: Use KillById instead
+        public static bool KillByName_OBSOLETE(string name) {
             Logger.Log("KillByName(): Attempting to kill processes with name: " + name);
 
             try {
@@ -58,9 +59,9 @@ namespace AdobeCrapKiller {
             }
         }
 
-        public static bool KillByPath(string path) {
+        // OBSOLETE: Use KillById instead
+        public static bool KillByPath_OBSOLETE(string path) {
             Logger.Log("KillByPath(): Attempting to kill processes with path: " + path);
-            // TODO: Can we do this via a stored process list instead of re-querying all processes? If so, we will need to store a process ID in the list of process objects.
             foreach (Process kp in Process.GetProcesses()) {
                 try {
                     if (kp == null || kp.MainModule == null || kp.MainModule.FileName == null) continue;
