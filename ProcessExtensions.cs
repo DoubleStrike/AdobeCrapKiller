@@ -5,6 +5,13 @@ using System.Media;
 using System.Windows;
 
 namespace AdobeCrapKiller {
+    /// <summary>
+    /// Provides extension methods for querying and managing system processes on the local computer.
+    /// </summary>
+    /// <remarks>This static class offers utility methods for retrieving, searching, and terminating processes
+    /// by name, identifier, or file path. All methods operate on processes running on the local machine and may require
+    /// elevated permissions to access or terminate certain processes. Some methods are marked as obsolete and should be
+    /// replaced with their recommended alternatives.</remarks>
     public static class ProcessExtensions {
         public static bool IsRunning(string name) => Process.GetProcessesByName(name).Length > 0;
 
