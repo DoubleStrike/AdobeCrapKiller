@@ -17,55 +17,17 @@ namespace AdobeCrapKiller {
         public static bool IsRunning(string name) => Process.GetProcessesByName(name).Length > 0;
 
         /// <summary>
-        /// Retrieves all processes on the local computer that have the specified name.
+        /// Searches for running processes whose main module file path contains any of the specified substrings,
+        /// excluding processes whose path contains "killer".
         /// </summary>
-        /// <remarks>This method only returns processes running on the local computer. To retrieve
-        /// processes on a remote computer, use <see cref="Process.GetProcessesByName(string, string)"/>. The returned
-        /// array may be empty if no processes with the specified name are running.</remarks>
-        /// <param name="name">The case-insensitive name of the process to search for. This should not include the file extension (for
-        /// example, use "notepad" instead of "notepad.exe").</param>
-        /// <returns>An array of <see cref="Process"/> objects representing all processes with the specified name. If no matching
-        /// processes are found, the array is empty.</returns>
-        public static Process[] GetByName(string name) {
-            return Process.GetProcessesByName(name);
-        }
-
-        /// <summary>
-        /// Retrieves a list of processes whose main module file path contains the specified substring, performing a
-        /// case-insensitive search.
-        /// </summary>
-        /// <remarks>Processes that cannot be accessed due to insufficient permissions or system
-        /// restrictions are skipped. The current process is excluded from the results.</remarks>
-        /// <param name="pathComponent">The substring to search for within the file paths of process main modules. The comparison is
-        /// case-insensitive.</param>
-        /// <returns>A list of <see cref="Process"/> objects representing processes whose main module file path contains the
-        /// specified substring. The list will be empty if no matching processes are found.</returns>
-        public static List<Process> GetByPathSubstring(string pathComponent) {
-            Logger.Log("GetByPathSubstring(): Searching for processes with path component: " + pathComponent);
-            List<Process> processesToReturn = new();
-
-            // Cycle through all processes and do a string match
-            foreach (Process p in Process.GetProcesses()) {
-                try {
-                    Logger.Log($"GetByPathSubstring(): Checking process: {p.ProcessName}");
-                    if (p.MainModule == null || !p.MainModule.FileName.Contains(pathComponent, StringComparison.InvariantCultureIgnoreCase)) {
-                        continue;
-                    }
-
-                    // Exclude self
-                    if (!p.MainModule.FileName.Contains("killer", StringComparison.InvariantCultureIgnoreCase)) {
-                        processesToReturn.Add(p);
-                    }
-                } catch (System.ComponentModel.Win32Exception e) {
-                    Logger.Log($"  GetByPathSubstring():Error reading process {p.ProcessName}: {e.Message}");
-                } catch (Exception) { }
-            }
-
-            Logger.Log($"GetByPathSubstring(): Found {processesToReturn.Count} matching processes.");
-            return processesToReturn;
-        }
-
-        // New function to match any of multiple substrings
+        /// <remarks>Processes whose main module file path contains "killer" (case-insensitive) are
+        /// excluded from the results. Accessing process information may fail for some processes due to insufficient
+        /// permissions or system restrictions; such processes are silently skipped.</remarks>
+        /// <param name="pathComponents">A collection of substrings to match against the file paths of running processes. Each substring is compared
+        /// case-insensitively. If any substring is found within a process's main module file path, that process is
+        /// included in the results.</param>
+        /// <returns>A list of <see cref="Process"/> objects representing processes whose main module file path contains at least
+        /// one of the specified substrings. The list is empty if no matching processes are found.</returns>
         public static List<Process> GetByPathSubstrings(IReadOnlyCollection<string> pathComponents) {
             Logger.Log("GetByPathSubstrings(): Searching for processes with path components: " + string.Join(", ", pathComponents));
             List<Process> processesToReturn = new();
