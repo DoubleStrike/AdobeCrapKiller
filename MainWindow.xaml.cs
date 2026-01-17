@@ -61,7 +61,7 @@ namespace AdobeCrapKiller {
             // Setup auto-refresh timer properties
             Logger.Log("MainWindow(): Setting up auto-refresh timer.");
             getProcessStatusTimer.Tick += new EventHandler(getProcessStatusTimer_Tick);
-            getProcessStatusTimer.Interval = new TimeSpan(0, 0, 0, 3);
+            getProcessStatusTimer.Interval = new TimeSpan(0, 0, 0, 15);
 
             // Setup datagrid binding
             Logger.Log("MainWindow(): Setting up datagrid binding.");
