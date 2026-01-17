@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel;
 
+// Obsolete: Use CommunityToolkit.Mvvm.ComponentModel.ObservableObject instead?
+
 namespace AdobeCrapKiller {
     public class ObservableProp<T> : INotifyPropertyChanged {
         private T _value = default!;
