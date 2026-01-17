@@ -56,6 +56,9 @@ namespace AdobeCrapKiller {
             }
 
             Logger.Log($"GetByPathSubstrings(): Found {processesToReturn.Count} matching processes.", LogLevel.Info);
+
+            // Sort by Process.Id descending (highest Id first)
+            processesToReturn.Sort((a, b) => b.Id.CompareTo(a.Id));
             return processesToReturn;
         }
 
