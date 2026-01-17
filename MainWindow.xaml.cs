@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Security.Principal;
 using System.Windows;
@@ -140,7 +139,7 @@ namespace AdobeCrapKiller {
             // TODO: This is inefficient - build a process list once and filter from that instead of querying twice
             Logger.Log("PopulateGrid(): Populating process list grid.", LogLevel.Info);
             // New code for testing
-            List<Process> newProcessesBoth = ProcessExtensions.GetByPathSubstrings(new[] { "adobe", "acrobat" });
+            System.Collections.Generic.List<Process> newProcessesBoth = ProcessExtensions.GetByPathSubstrings(new[] { "adobe", "acrobat" });
             Logger.Log("PopulateGrid(): Found " + newProcessesBoth.Count + " Adobe/Acrobat-related processes.", LogLevel.Info);
 
             processesToKill ??= new();
