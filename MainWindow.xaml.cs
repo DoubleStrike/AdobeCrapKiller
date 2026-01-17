@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Media;
-using System.Reflection;
 using System.Security.Principal;
 using System.Windows;
-using System.Windows.Media;
 
 namespace AdobeCrapKiller {
     /// <summary>
@@ -14,7 +10,7 @@ namespace AdobeCrapKiller {
     /// </summary>
     public partial class MainWindow : Window {
         // Change the property to be nullable to satisfy CS8618
-        ObservableCollection<AdobeMemoryWastingCrap>? processesToKill { get; set; }
+        System.Collections.ObjectModel.ObservableCollection<AdobeMemoryWastingCrap>? processesToKill { get; set; }
         private System.Windows.Threading.DispatcherTimer getProcessStatusTimer = new();
 
         public MainWindow() {
@@ -47,12 +43,12 @@ namespace AdobeCrapKiller {
                 Logger.Log("MainWindow(): Running as admin.", LogLevel.Info);
 
                 // Mark title as red if we are running as admin, to make it more clear
-                lblTitle.Foreground = new SolidColorBrush(Colors.Red);
+                lblTitle.Foreground = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Red);
                 lblTitle.Content += " (Admin Mode)";
             }
 
             // Show version in titlebar
-            Version? version = Assembly.GetExecutingAssembly().GetName().Version;
+            Version? version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
             if (version != null) {
                 this.Title += " v";
                 this.Title += version.ToString();
@@ -65,7 +61,7 @@ namespace AdobeCrapKiller {
 
             // Setup datagrid binding
             Logger.Log("MainWindow(): Setting up datagrid binding.", LogLevel.Info);
-            processesToKill = new ObservableCollection<AdobeMemoryWastingCrap>();
+            processesToKill = new System.Collections.ObjectModel.ObservableCollection<AdobeMemoryWastingCrap>();
             dataGrid.ItemsSource = processesToKill;
 
             Logger.Log("MainWindow(): Main window initialization completed.", LogLevel.Info);
@@ -94,7 +90,7 @@ namespace AdobeCrapKiller {
             }
 
             PopulateGrid();
-            SystemSounds.Beep.Play();
+            System.Media.SystemSounds.Beep.Play();
             Logger.Log("btnKill_Click(): Finished killing Adobe processes.", LogLevel.Info);
         }
 
@@ -117,7 +113,7 @@ namespace AdobeCrapKiller {
 
         private void getProcessStatusTimer_Tick(object? sender, EventArgs e) {
             Logger.Log("getProcessStatusTimer_Tick(): Auto-refresh tick triggered.", LogLevel.Info);
-            SystemSounds.Beep.Play();
+            System.Media.SystemSounds.Beep.Play();
             PopulateGrid();
             Logger.Log("getProcessStatusTimer_Tick(): Auto-refresh tick completed.", LogLevel.Info);
         }
