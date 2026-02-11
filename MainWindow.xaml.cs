@@ -12,6 +12,14 @@ namespace AdobeCrapKiller {
         System.Collections.ObjectModel.ObservableCollection<AdobeMemoryWastingCrap>? processesToKill { get; set; }
         private System.Windows.Threading.DispatcherTimer getProcessStatusTimer = new();
 
+        /// <summary>
+        /// Initializes a new instance of the MainWindow class and prepares the main application window for use.
+        /// </summary>
+        /// <remarks>If the application is not running with administrator privileges, the constructor
+        /// prompts the user to restart the application with elevated permissions. Certain features may require
+        /// administrative rights to function correctly. The window title is updated to indicate admin mode when running
+        /// with elevated privileges, and the application version is displayed in the title bar. The constructor also
+        /// sets up the auto-refresh timer and data grid binding for process management.</remarks>
         public MainWindow() {
             Logger.Log("MainWindow(): Initializing main window.", LogLevel.Info);
             InitializeComponent();
